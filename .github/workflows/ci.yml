@@ -92,9 +92,16 @@ jobs:
 
           echo "Updating frontend"
 
-          sed -i "s|^[[:space:]]*image:.*|          image: ${ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com/frontend:${NEW_TAG}|g" "gitops/k8s/frontend.yml"
+          sed -i "s|^[[:space:]]*image:.*|          image: ${ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com/frontend:${NEW_TAG}|g" "gitops/k8s/frontend:${NEW_TAG}|g" \
+           gitops/k8s/frontend/deployment.yml
 
-            gitops/k8s/frontend/deployment.yml
+      - name: Verify changes
+        run: |
+          echo "Backend images:"
+          grep -R "image:" gitops/k8s/backend/
+
+          echo "Frontend images:"
+          grep -R "image:" gitops/k8s/frontend/deployment.yml
 
       - name: Commit and push updated manifests
         run: |
