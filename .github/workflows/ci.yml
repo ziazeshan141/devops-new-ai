@@ -100,8 +100,7 @@ jobs:
       - name: Verify changes
         run: |
           echo "Backend images:"
-          grep "image:" gitops/k8s/backend/auth.yaml
-          grep "image:" gitops/k8s/backend/gateway.yml  
+          grep "image:" gitops/k8s/backend/
 
           echo "Frontend images:"
           grep "image:" gitops/k8s/frontend/deployment.yml
